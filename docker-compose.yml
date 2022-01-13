@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+    ports:
+      - 5432:5432
+    volumes:
+        #allow *.sql, *.sql.gz, or *.sh and is execute only if data directory is empty
+      - ./dbfiles:/docker-entrypoint-initdb.d
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=my_store
+      - POSTGRES_USER=lmanuel
+      - POSTGRES_PASSWORD=lmanuel
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
+      - PGADMIN_DEFAULT_PASSWORD=root
+    ports:
+      - 5050:80
